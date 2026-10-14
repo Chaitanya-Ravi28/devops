@@ -1,0 +1,23 @@
+
+#include <tunables/global>
+
+/usr/local/bin/python3 {
+  #include <abstractions/base>
+
+  # Allow the application to read its code
+  /app/** r,
+
+  # Allow Python runtime and shared libraries
+  /usr/local/bin/python3* rix,
+  /usr/local/lib/python3.*/** mr,
+
+  # Allow Flask to bind its application port
+  network inet stream,
+
+  # Deny sensitive file reads
+  deny /etc/shadow r,
+  deny /root/** rwklx,
+
+  # Deny administrative capabilities
+  deny capability sys_admin,
+}
